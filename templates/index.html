@@ -1,44 +1,50 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <title>Roboly - The Url Shortener</title>
 </head>
-<style>
-    body{
-        background-color: #0a192f;
-        color: #64ffda;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-    }
-    h1{
-        font-size: 4rem;
-        margin-bottom: 4rem;
-    }
-    input{
-        outline: none;
-        border: none;
-        padding: 15px 25px;
-        width: 400px;
-        font-size: 2.2rem;
-    }
-    a{
-        text-decoration:none;
-        color: #64ffda;
-    }
-</style>
 <body>
-<h1><a href="/">Roboly - The URL Shortener</a></h1>
+    <div class="navbar">
+        <a href="/"> roboly </a>
+        <span id="block460"> The Url Shortener </span>
+    </div>
 
-<form method="POST">
+    <div class="main">
+    
+    <form method="POST" class="container">
     {% csrf_token %}
-    <input type="text" name="url" placeholder="Enter Your url"> <button type="submit"> Submit</button>
+            <input type="url" name="url" placeholder="Shorten Your url" required="true"> <button type="submit"> Shorten</button>
+    </form>
+    
 
-</form>
+    {% if slug %}
+    <div class="results container">
+        <h2> <a href="{{ request.build_absolute_uri }}x/{{slug}}"> {{ request.build_absolute_uri }}x/{{slug}} </a> </h2> <button onclick="copyLink()" id="copyButton"> Copy </button>
+        <input type="url" id="myLink" value="{{ request.build_absolute_uri }}x/{{slug}}" style="display: none;">
+    </div>
+
+    <script>
+        function copyLink() {
+          var copyText = document.getElementById("myLink");
+          var copyButton = document.getElementById("copyButton");
+          copyText.select();
+          copyText.setSelectionRange(0, 99999);
+          navigator.clipboard.writeText(copyText.value);
+          copyButton.innerText = "Copied !"
+        }
+    </script>
+    {% endif %}
+
+    </div>
+    <div class="footer">
+        <a href="https://github.com/rishav-jha-mech"> Made With <span style="color: red;">❤</span> by Rishav Jha <span id="block540">For Hacktober Fest 2021</span>
+    </div>
+
+
 
 </body>
 </html>
