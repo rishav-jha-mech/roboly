@@ -7,6 +7,7 @@ import string
 
 
 def home(request):
+
     if request.method == 'POST':
         url = request.POST.get('url')
         slug = ''.join(random.choice(string.ascii_letters)
@@ -20,6 +21,8 @@ def home(request):
         roboly = URLDATA(Long_URL=url,Short_URL=slug)
         roboly.save()
         
+        return render(request, 'index.html',{'slug':slug})
+
     return render(request, 'index.html')
 
 def redirectClient (request,slug):
