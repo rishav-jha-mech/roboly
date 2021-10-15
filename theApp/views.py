@@ -30,4 +30,4 @@ def redirectClient (request,slug):
     try:
         return redirect (URLDATA.objects.get(Short_URL=slug).Long_URL)
     except:
-        return HttpResponseNotFound(content="404 Not Found 😀")
+        return HttpResponseNotFound()
